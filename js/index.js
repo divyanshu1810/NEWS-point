@@ -1,78 +1,80 @@
-// console.log('news');
-//a7b87dc0cd1845909a3c730e4206a830
+console.log("This is my index.js file");
+//26e92693046341ad9d594421f6e1b21d
 
-// Initialize the news api parameters
-let source = 'bbc-news';
-let apiKey = 'a7b87dc0cd1845909a3c730e4206a830';
+//Initialise the news parameters
+let source = "bbc-news";
+let apikey = "26e92693046341ad9d594421f6e1b21d";
+// //Grab the newscontainer
+let newsAccordion = document.getElementById("newsAccordion");
 
-// Grab the news Container
-let newsAccordian = document.getElementById('newsAccordian');
-
-async function fetchNewsItems()
-{
-    let newsHtml="";
-    fetch(`https://newsapi.org/v2/top-headlines?sources=${source}&apiKey=${apiKey}`).then((response)=>
-    {
-        response.json().then((data)=>
-        {
-            data.articles.forEach(function(element,index)
-            {
-                let news = `<div class="card">
-                <div class="card-header" id="heading${index}">
-                <h2 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse${index}"
-                aria-expanded="false" aria-controls="collapse${index}">
-                <b>Breaking News ${index+1}:</b> ${element["title"]}
-                </button>
-                </h2>
-                </div>           
-                <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#newsAccordion">
-                <div class="card-body"> ${element["content"]}. <a href="${element['url']}" target="_blank" >Read more here</a>  </div>
-                </div>
-                </div>`;
-                newsHtml += news;
-            });
-            newsAccordion.innerHTML = newsHtml;
-        });
-    });
-}
-
-window.addEventListener('load',fetchNewsItems);
-// // Create a get request
+// //Create an ajax get request
 // const xhr = new XMLHttpRequest();
-
-// xhr.open('GET', `https://newsapi.org/v2/top-headlines?sources=${source}&apiKey=${apiKey}`, true);
-
-
-// What to do when response is ready
+// xhr.open('GET', `https://newsapi.org/v2/top-headlines?sources=${source}&apiKey=${apikey}`, true);
+// what to do when response is ready
 // xhr.onload = function () {
 //     if (this.status === 200) {
 //         let json = JSON.parse(this.responseText);
 //         let articles = json.articles;
-//         console.log(articles);
-//         let newsHtml = "";
-//         articles.forEach(function(element, index) {
-//             // console.log(element, index)
+//         // console.log("articles");
+
+//         let newsHTML = "";
+//         articles.forEach(function (element,index) {
+//             // console.log(articles[news]);
 //             let news = `<div class="card">
-//             <div class="card-header" id="heading${index}">
+//         <div class="card-header" id="heading${index}">
 //             <h2 class="mb-0">
 //             <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse${index}"
-//             aria-expanded="false" aria-controls="collapse${index}">
-//             <b>Breaking News ${index+1}:</b> ${element["title"]}
+//                 aria-expanded="false" aria-controls="collapse${index}">
+//             <b>Breaking News ${index + 1}:</b> ${element["title"]}
 //             </button>
 //             </h2>
-//             </div>           
-//             <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#newsAccordion">
+//         </div>
+
+//         <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#newsAccordion">
 //             <div class="card-body"> ${element["content"]}. <a href="${element['url']}" target="_blank" >Read more here</a>  </div>
-//             </div>
-//             </div>`;
-//             newsHtml += news;
+//         </div>
+//         </div>`;
+//             newsHTML += news;
 //         });
-//         newsAccordion.innerHTML = newsHtml;
+//         newsAccordion.innerHTML = newsHTML;
 //     }
 //     else {
-//         console.log("Some error occured")
+//         console.log("Some error occured");
 //     }
 // }
 
-// xhr.send()
+// xhr.send();
+
+async function fectchNewsItems() {
+    let newsHTML = "";
+    fetch(`https://alexa-news-api.herokuapp.com/`).then((response) => {
+        response.json().then((data) => {
+            data.data.forEach(function (element, index) {
+                let news = `<div class="card">
+                        <div class="card-header" id="heading${index}">
+                            <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse${index}"
+                                aria-expanded="false" aria-controls="collapse${index}">
+                            <b>Breaking News ${index + 1}:</b> ${
+                    element["title"]
+                }
+                            </button>
+                            </h2>
+                        </div>
+                
+                        <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#newsAccordion">
+                            <div class="card-body"> ${
+                                element["content"]
+                            }. <a href="${
+                    element["url"]
+                }" target="_blank" >Read more here</a>  </div>
+                        </div>
+                        </div>`;
+                newsHTML += news;
+            });
+            newsAccordion.innerHTML = newsHTML;
+        });
+    });
+}
+
+window.addEventListener("load", fectchNewsItems);
